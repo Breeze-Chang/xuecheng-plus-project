@@ -5,6 +5,7 @@ import com.xuecheng.content.model.dto.TeachplanDto;
 import com.xuecheng.content.model.po.Teachplan;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -22,4 +23,7 @@ public interface TeachplanMapper extends BaseMapper<Teachplan> {
 
     @Select("select max(orderby) as count from xuecheng_content.teachplan where parentid =#{parentId} and course_id = #{courseId}")
     Integer getMaxOrderby(@Param("parentId") Long parentid,@Param("courseId") Long courseId);
+
+    @Update("update xuecheng_content.teachplan set orderby=orderby-1 where orderby > #{orderby}")
+    void updateOrderby(Integer orderby);
 }

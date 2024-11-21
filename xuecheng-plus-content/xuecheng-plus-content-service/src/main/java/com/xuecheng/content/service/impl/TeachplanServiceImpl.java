@@ -72,7 +72,9 @@ public class TeachplanServiceImpl implements TeachplanService {
         }
         else{
             //如果是小章节,删除第二级别的小节的同时需要将其它关联的视频信息也删除。
+            Integer orderby = teachplan.getOrderby();
             teachplanMapper.deleteById(teachplanId);
+            teachplanMapper.updateOrderby(orderby);
             LambdaQueryWrapper<TeachplanMedia> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper = queryWrapper.eq(TeachplanMedia::getTeachplanId,teachplanId);
             teachplanMediaMapper.delete(queryWrapper);
